@@ -23,28 +23,49 @@ let addUser = (user) => {
     })
 };
 
-let getUser = (username, password) => {
+let getUser = (userId) => {
     return new Promise((resolve, reject) => {
         getUsers()
-        .then(users => {
-            let found = false;
-            users.forEach(user => {
-                if (!found && user.username == username && user.password == password) {
-                    found = true;
-                    resolve(user);
-                }
-            })
-            reject();
-        })
-        .catch(()=> reject());
-    })
+            .then(users => {
+                let found = false;
+                users.forEach(user => {
+                    if (!found && user.id == userId) {
+                        found = true;
+                        resolve(user);
+                    }
+                })
 
+                if (!found)
+                    reject();
+            })
+            .catch(() => reject());
+    })
+}
+
+let verifyLogin = (username, password) => {
+    return new Promise((resolve, reject) => {
+        getUsers()
+            .then(users => {
+                let found = false;
+                users.forEach(user => {
+                    if (!found && user.username == username && user.password == password) {
+                        found = true;
+                        resolve(user);
+                    }
+                })
+
+                if (!found)
+                    reject();
+            })
+            .catch(() => reject());
+    })
 }
 
 let getUsers = () => getArray(filePath);
 
 module.exports = {
     getUser: getUser,
+    verifyLogin: verifyLogin,
     addUser: addUser,
     getUsers: getUsers
 }

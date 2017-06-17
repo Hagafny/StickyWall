@@ -39,7 +39,7 @@ export default class Note extends Component {
         let newText = findDOMNode(this.refs.newText).value;
         let newNote = {
             id: this.props.id,
-            user: this.props.user,
+            userId: this.props.user.id,
             text: newText
         }
         this.props.onChange(newNote, this.props.index);
@@ -53,6 +53,7 @@ export default class Note extends Component {
         return (
             <div className="note" style={this.style}>
                 <p>{this.props.text}</p>
+                <span className="author"> ~ {this.props.user.username}</span>
                 <span className="buttons">
                     <button onClick={this.edit}
                         className="btn btn-primary glyphicon glyphicon-pencil" />

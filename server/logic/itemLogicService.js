@@ -8,8 +8,9 @@ let addItem = (userId, text) => {
             .then(item => {
                 userDataService.getUser(userId)
                     .then(user => {
-                        console.log(4);
                         item.user = user;
+                        delete item.user.password;
+                        delete item.userId;
                         resolve(item);
                     })
                     .catch(() => reject());
@@ -35,7 +36,19 @@ let getItem = itemId => {
 
 let deleteItem = itemId => itemDataService.deleteItem(itemId)
 
-let updateItem = item => itemDataService.updateItem(item)
+let updateItem = item => {
+    return new Promise((resolve, reject) => {
+        itemDataService.updateItem(item)
+            .then(item => {
+                userDataService.getUser(item.userId)
+                    .then(user => {
+                        item.user = user;
+                        resolve(item);
+                    })
+            })
+            .catch(() => reject());
+    })
+}
 
 let getItems = () => {
     return new Promise((resolve, reject) => {

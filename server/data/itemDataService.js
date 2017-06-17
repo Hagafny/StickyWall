@@ -64,7 +64,7 @@ let updateItem = (itemToAdd) => {
             else {
                 items[itemIndex] = itemToAdd;
                 writeArrayToFile(filePath, items)
-                    .then(() => resolve());
+                    .then(() => resolve(itemToAdd));
             }
         });
     })

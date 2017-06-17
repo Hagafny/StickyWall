@@ -3,14 +3,14 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-    template: './client/index.html',
+    template: './client/src/index.html',
     filename: 'index.html',
     inject: 'body'
 })
 module.exports = {
-    entry: './client/index.jsx',
+    entry: './client/src/index.jsx',
     output: {
-        path: path.resolve('dist'),
+        path: path.resolve('client/dist'),
         filename: 'app.js'
     },
     module: {

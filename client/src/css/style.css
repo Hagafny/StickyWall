@@ -13,7 +13,7 @@ div#react-container {
 body {
     margin: 0;
     padding: 0;
-    background-color:brown;
+    /*background-color:brown;*/
 }
 
 div.board {
@@ -62,6 +62,14 @@ div.note > span.buttons {
     transition: opacity .25s linear;
 }
 
+div.note > span.author {
+    position: absolute;
+    bottom: 2px;
+    border-top-left-radius: 2px;
+        font-style: oblique;
+}
+
+
 div.note button {
     margin: 2px;
 }
@@ -73,7 +81,7 @@ div.note > textarea {
 
 .glyphicon-plus {
     position: fixed;
-    top: 10px;
+    top: 50px;
     right: 10px;
 }
 
@@ -88,3 +96,70 @@ div.note > textarea {
 .modal-body .form-horizontal .col-sm-offset-2 {
     margin-left: 15px;
 }
+
+
+
+a {
+  color: #00bcd4;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.4s;
+}
+
+a:hover {
+  color: #1976d2;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.top-bar {
+  padding: 10px 15px;
+  margin-bottom: 50px;
+  background-color:grey;
+}
+.top-bar::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.top-bar-left {
+  float: left;
+  font-size: 1.5em;
+}
+
+.top-bar-right {
+  float: right;
+}
+
+.top-bar a,
+.nav a {
+  margin: 0 8px;
+}
+
+.container {
+  margin: 0 auto;
+  text-align: center;
+  width: 700px;
+}
+
+.card-heading {
+  padding: 16px;
+}
+
+.field-line, .button-line {
+  padding: 16px;
+}
+
+.error-message {
+  padding: 0 16px;
+  color: tomato;
+}
+
+.success-message {
+  padding: 0 16px;
+  color: green;
+}
+

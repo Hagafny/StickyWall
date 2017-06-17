@@ -1,7 +1,3 @@
-TODO:
-
-* All the cookie stuff
-* Create login/register page
-* make sure to set the userId to the cookies' userId when adding notes
-* Show the user name on the note itself
+* Only show the buttons if I'm the user in charge
 * Create a Note Page for each note
+* Redirect to Hello and stuff

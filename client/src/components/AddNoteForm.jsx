@@ -20,8 +20,8 @@ const AddNoteForm = (props) => {
                     <form role="form" onSubmit={props.handleSubmit}>
                         <div className="modal-body">
 
-                            <textarea  id="addNoteTextArea" className="form-control"
-                             placeholder="Enter note" onChange={props.handleNoteTextChange} />
+                            <textarea  id="addNoteTextArea" rows="4" className="form-control"
+                             placeholder="Add Note" onChange={props.handleNoteTextChange} />
 
 
                         </div>

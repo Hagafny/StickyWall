@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import AddNoteForm from './AddNoteForm.jsx';
+import AddNoteForm from '../components/AddNoteForm.jsx';
+import { getUserIdCookie } from '../modules/Auth.js';
 export default class AddNoteFormContainer extends Component {
 
     constructor(props) {
@@ -20,7 +21,7 @@ export default class AddNoteFormContainer extends Component {
         $("#addNoteTextArea").val('');
         let newNote = {
             text: this.state.text,
-            userId: "123"
+            userId: getUserIdCookie()
         }
         this.props.saveNote(newNote);
     }
