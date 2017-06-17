@@ -25,7 +25,8 @@ let addUser = (user) => {
 
 let getUser = (username, password) => {
     return new Promise((resolve, reject) => {
-        getUsers().then(users => {
+        getUsers()
+        .then(users => {
             let found = false;
             users.forEach(user => {
                 if (!found && user.username == username && user.password == password) {
@@ -34,7 +35,8 @@ let getUser = (username, password) => {
                 }
             })
             reject();
-        });
+        })
+        .catch(()=> reject());
     })
 
 }

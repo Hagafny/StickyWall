@@ -9880,9 +9880,9 @@ var _Note = __webpack_require__(87);
 
 var _Note2 = _interopRequireDefault(_Note);
 
-var _AddNoteForm = __webpack_require__(221);
+var _AddNoteFormContainer = __webpack_require__(222);
 
-var _AddNoteForm2 = _interopRequireDefault(_AddNoteForm);
+var _AddNoteFormContainer2 = _interopRequireDefault(_AddNoteFormContainer);
 
 var _axios = __webpack_require__(200);
 
@@ -9909,7 +9909,7 @@ var Board = function (_Component) {
         };
 
         _this.getNotes = _this.getNotes.bind(_this);
-        _this.nextId = _this.nextId.bind(_this);
+        _this.save = _this.save.bind(_this);
         _this.add = _this.add.bind(_this);
         _this.update = _this.update.bind(_this);
         _this.remove = _this.remove.bind(_this);
@@ -9934,14 +9934,26 @@ var Board = function (_Component) {
             });
         }
     }, {
-        key: 'nextId',
-        value: function nextId() {
-            this.uniqueId = this.uniqueId || 0;
-            return this.uniqueId++;
+        key: 'save',
+        value: function save(newNote) {
+            var _this3 = this;
+
+            var data = JSON.stringify(newNote);
+
+            var config = {
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            };
+
+            _axios2.default.post('/item', data, config).then(function (res) {
+                if (res.status === 200) {
+                    _this3.add(res.data);
+                } else alert('Something went wrong');
+            });
         }
     }, {
         key: 'add',
         value: function add(note) {
+            console.log(note);
             var arr = this.state.notes;
             arr.push(note);
             this.setState({ notes: arr });
@@ -9949,7 +9961,7 @@ var Board = function (_Component) {
     }, {
         key: 'update',
         value: function update(newNote, i) {
-            var _this3 = this;
+            var _this4 = this;
 
             var data = JSON.stringify(newNote);
 
@@ -9959,23 +9971,23 @@ var Board = function (_Component) {
 
             _axios2.default.put('/item', data, config).then(function (res) {
                 if (res.status === 200) {
-                    var arr = _this3.state.notes;
+                    var arr = _this4.state.notes;
                     arr[i] = newNote;
-                    _this3.setState({ notes: arr });
+                    _this4.setState({ notes: arr });
                 } else alert('Something went wrong');
             });
         }
     }, {
         key: 'remove',
         value: function remove(i) {
-            var _this4 = this;
+            var _this5 = this;
 
             var arr = this.state.notes;
             var noteIdToDelete = arr[i].id;
             _axios2.default.delete('/item/' + noteIdToDelete).then(function (res) {
                 if (res.status === 200) {
                     arr.splice(i, 1); //remove one note
-                    _this4.setState({ notes: arr }); //update state array
+                    _this5.setState({ notes: arr }); //update state array
                 } else alert('Something went wrong');
             });
         }
@@ -9996,8 +10008,8 @@ var Board = function (_Component) {
                 { className: 'board' },
                 this.state.notes.map(this.noteMapper),
                 _react2.default.createElement('button', { className: 'btn btn-sm btn-success glyphicon glyphicon-plus',
-                    'data-toggle': 'modal', 'data-target': '#myModalNorm' }),
-                _react2.default.createElement(_AddNoteForm2.default, null)
+                    'data-toggle': 'modal', 'data-target': '#addNoteModal' }),
+                _react2.default.createElement(_AddNoteFormContainer2.default, { saveNote: this.save })
             );
         }
     }]);
@@ -24868,7 +24880,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var AddNoteForm = function AddNoteForm(props) {
     return _react2.default.createElement(
         "div",
-        { className: "modal fade", id: "myModalNorm", tabindex: "-1", role: "dialog",
+        { className: "modal fade", id: "addNoteModal", tabIndex: "-1", role: "dialog",
             "aria-labelledby": "myModalLabel", "aria-hidden": "true" },
         _react2.default.createElement(
             "div",
@@ -24897,67 +24909,22 @@ var AddNoteForm = function AddNoteForm(props) {
                     _react2.default.createElement(
                         "h4",
                         { className: "modal-title", id: "myModalLabel" },
-                        "Modal title"
+                        "Add Note"
                     )
                 ),
                 _react2.default.createElement(
-                    "div",
-                    { className: "modal-body" },
+                    "form",
+                    { role: "form", onSubmit: props.handleSubmit },
                     _react2.default.createElement(
-                        "form",
-                        { role: "form" },
-                        _react2.default.createElement(
-                            "div",
-                            { className: "form-group" },
-                            _react2.default.createElement(
-                                "label",
-                                { "for": "exampleInputEmail1" },
-                                "Email address"
-                            ),
-                            _react2.default.createElement("input", { type: "email", className: "form-control",
-                                id: "exampleInputEmail1", placeholder: "Enter email" })
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "form-group" },
-                            _react2.default.createElement(
-                                "label",
-                                { "for": "exampleInputPassword1" },
-                                "Password"
-                            ),
-                            _react2.default.createElement("input", { type: "password", className: "form-control",
-                                id: "exampleInputPassword1", placeholder: "Password" })
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "checkbox" },
-                            _react2.default.createElement(
-                                "label",
-                                null,
-                                _react2.default.createElement("input", { type: "checkbox" }),
-                                " Check me out"
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "button",
-                            { type: "submit", className: "btn btn-default" },
-                            "Submit"
-                        )
-                    )
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { className: "modal-footer" },
-                    _react2.default.createElement(
-                        "button",
-                        { type: "button", className: "btn btn-default",
-                            "data-dismiss": "modal" },
-                        "Close"
+                        "div",
+                        { className: "modal-body" },
+                        _react2.default.createElement("textarea", { id: "addNoteTextArea", className: "form-control",
+                            placeholder: "Enter note", onChange: props.handleNoteTextChange })
                     ),
                     _react2.default.createElement(
-                        "button",
-                        { type: "button", className: "btn btn-primary" },
-                        "Save changes"
+                        "div",
+                        { className: "modal-footer" },
+                        _react2.default.createElement("input", { type: "submit", value: "Save", className: "btn btn-primary" })
                     )
                 )
             )
@@ -24966,6 +24933,82 @@ var AddNoteForm = function AddNoteForm(props) {
 };
 
 exports.default = AddNoteForm;
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(20);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AddNoteForm = __webpack_require__(221);
+
+var _AddNoteForm2 = _interopRequireDefault(_AddNoteForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddNoteFormContainer = function (_Component) {
+    _inherits(AddNoteFormContainer, _Component);
+
+    function AddNoteFormContainer(props) {
+        _classCallCheck(this, AddNoteFormContainer);
+
+        var _this = _possibleConstructorReturn(this, (AddNoteFormContainer.__proto__ || Object.getPrototypeOf(AddNoteFormContainer)).call(this, props));
+
+        _this.state = {
+            text: ""
+        };
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.handleNoteTextChange = _this.handleNoteTextChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(AddNoteFormContainer, [{
+        key: 'handleNoteTextChange',
+        value: function handleNoteTextChange(e) {
+            this.setState({ text: e.target.value });
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(e) {
+            e.preventDefault();
+            $('#addNoteModal').modal('hide');
+            $("#addNoteTextArea").val('');
+            var newNote = {
+                text: this.state.text,
+                userId: "123"
+            };
+            this.props.saveNote(newNote);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(_AddNoteForm2.default, {
+                handleNoteTextChange: this.handleNoteTextChange,
+                handleSubmit: this.handleSubmit });
+        }
+    }]);
+
+    return AddNoteFormContainer;
+}(_react.Component);
+
+exports.default = AddNoteFormContainer;
 
 /***/ })
 /******/ ]);

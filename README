@@ -1,0 +1,7 @@
+TODO:
+
+* All the cookie stuff
+* Create login/register page
+* make sure to set the userId to the cookies' userId when adding notes
+* Show the user name on the note itself
+* Create a Note Page for each note

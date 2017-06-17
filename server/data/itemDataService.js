@@ -6,9 +6,10 @@ let addItem = (item) => {
         getItems().then(items => {
             items.push(item);
             writeArrayToFile(filePath, items)
-                .then(() => resolve())
+                .then(() => resolve(item))
                 .catch(() => reject());
         })
+        .catch(()=> reject());
     })
 };
 

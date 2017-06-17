@@ -42,12 +42,10 @@ app.post('/login/:username/:password', (req, res) => {
 
 app.post('/item', (req, res) => {
     let { text, userId } = req.body;
-
     itemService.addItem(userId, text)
         .then(item => {
-            res.status(200).json({
-                message: `Item added`
-            });
+            console.log(item);
+            res.status(200).json(item);
         })
 })
 

@@ -2,7 +2,21 @@ const itemDataService = require('./../data/itemDataService');
 const userDataService = require('./../data/userDataService');
 const Item = require('./../classes/Item');
 
-let addItem = (userId, text) => itemDataService.addItem(new Item(userId, text));
+let addItem = (userId, text) => {
+    return new Promise((resolve, reject) => {
+        itemDataService.addItem(new Item(userId, text))
+            .then(item => {
+                userDataService.getUser(userId)
+                    .then(user => {
+                        console.log(4);
+                        item.user = user;
+                        resolve(item);
+                    })
+                    .catch(() => reject());
+            })
+            .catch(() => reject());
+    })
+}
 
 let getItem = itemId => {
     return new Promise((resolve, reject) => {

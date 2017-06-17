@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom';
 import Note from './Note.jsx';
-import AddNoteForm from './AddNoteForm.jsx';
+import AddNoteFormContainer from './AddNoteFormContainer.jsx';
 import axios from 'axios';
 
 export default class Board extends Component {
@@ -12,7 +12,7 @@ export default class Board extends Component {
         };
 
         this.getNotes = this.getNotes.bind(this);
-        this.nextId = this.nextId.bind(this);
+        this.save = this.save.bind(this);
         this.add = this.add.bind(this);
         this.update = this.update.bind(this);
         this.remove = this.remove.bind(this);
@@ -30,15 +30,26 @@ export default class Board extends Component {
                 })
             })
     }
-    nextId() {
-        this.uniqueId = this.uniqueId || 0;
-        return this.uniqueId++;
+    save(newNote) {
+        var data = JSON.stringify(newNote);
+
+        var config = {
+            headers: { 'Content-Type': 'application/json; charset=utf-8' }
+        };
+
+        axios.post(`/item`, data, config).then((res) => {
+            if (res.status === 200) {
+                this.add(res.data);
+            }
+            else
+                alert('Something went wrong');
+        });
     }
     add(note) {
+        console.log(note);
         let arr = this.state.notes;
         arr.push(note);
         this.setState({ notes: arr });
-
     }
     update(newNote, i) {
         var data = JSON.stringify(newNote);
@@ -84,9 +95,8 @@ export default class Board extends Component {
         return (<div className="board">
             {this.state.notes.map(this.noteMapper)}
             <button className="btn btn-sm btn-success glyphicon glyphicon-plus"
-                data-toggle="modal" data-target="#myModalNorm" />
-
-                <AddNoteForm />
+                data-toggle="modal" data-target="#addNoteModal" />
+            <AddNoteFormContainer saveNote={this.save} />
 
 
         </div>
