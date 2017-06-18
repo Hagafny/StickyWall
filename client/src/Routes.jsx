@@ -3,7 +3,9 @@ import HomePage from './components/HomePage.jsx';
 import LoginPage from './containers/LoginPage.jsx';
 import SignUpPage from './containers/SignUpPage.jsx';
 import BoardPage from './containers/BoardPage.jsx';
+import SingleNotePage from './containers/SingleNotePage.jsx';
 import Auth from './modules/Auth.js';
+
 const routes = {
   // base component (wrapper for the whole application).
   component: Base,
@@ -19,6 +21,10 @@ const routes = {
       }
     },
     {
+      path: '/note/:id',
+      component: SingleNotePage
+    },
+    {
       path: '/login',
       component: LoginPage
     },
@@ -27,16 +33,13 @@ const routes = {
       path: '/signup',
       component: SignUpPage
     },
-     {
+    {
       path: '/logout',
       onEnter: (nextState, replace) => {
         Auth.deauthenticateUser();
-
-        // change the current URL to /
         replace('/');
       }
-    }   
-
+    }
   ]
 };
 

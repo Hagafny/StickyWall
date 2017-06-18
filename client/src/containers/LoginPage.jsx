@@ -37,13 +37,12 @@ class LoginPage extends React.Component {
 
     axios.post(`/login/${username}/${password}`).then((res) => {
 
-      if (res.status === 200) {
+      if (res.status === 200)
         window.location.replace("/");
-      }
-      else {
-        alert('Login faild. Wrong credentials');
-      };
     })
+      .catch(() => {
+        alert('Login faild. Wrong credentials')
+      })
   }
 
   render() {

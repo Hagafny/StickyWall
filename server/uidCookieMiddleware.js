@@ -1,5 +1,4 @@
 module.exports = (req, res, next) => {
-    console.log('indeed its insane');
     let userIdCookie = req.cookies['uid'];
     if (userIdCookie) {
         let expiryDate = 1000 * 60 * 60;  //1 Hour

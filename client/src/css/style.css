@@ -30,8 +30,8 @@ div.board {
 }
 
 div.note {
-    height: 200px;
-    width: 200px;
+    height: 220px;
+    width: 220px;
     background-color: yellow;
     margin: 2px 0;
     position: absolute;
@@ -79,7 +79,7 @@ div.note > textarea {
     background: rgba(255, 255, 255, .5);
 }
 
-.glyphicon-plus {
+.glyphicon-plus, .glyphicon-arrow-left {
     position: fixed;
     top: 50px;
     right: 10px;

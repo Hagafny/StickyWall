@@ -2,6 +2,8 @@ const itemDataService = require('./../data/itemDataService');
 const userDataService = require('./../data/userDataService');
 const Item = require('./../classes/Item');
 
+// Add the item and when you get and itemId back, also get the user associated with the userId
+// and add him to the item object
 let addItem = (userId, text) => {
     return new Promise((resolve, reject) => {
         itemDataService.addItem(new Item(userId, text))
@@ -19,6 +21,7 @@ let addItem = (userId, text) => {
     })
 }
 
+// Get the item and get the user that is inside his userId and combine them
 let getItem = itemId => {
     return new Promise((resolve, reject) => {
         itemDataService.getItem(itemId)
@@ -26,6 +29,8 @@ let getItem = itemId => {
                 userDataService.getUser(item.userId)
                     .then(user => {
                         item.user = user;
+                        delete item.userId;
+                        delete item.user.password;
                         resolve(item);
                     })
             })
@@ -36,6 +41,7 @@ let getItem = itemId => {
 
 let deleteItem = itemId => itemDataService.deleteItem(itemId)
 
+// update the Item and afterwards add the user that has written the idem.
 let updateItem = item => {
     return new Promise((resolve, reject) => {
         itemDataService.updateItem(item)
@@ -50,6 +56,9 @@ let updateItem = item => {
     })
 }
 
+// Get all the items and all the users at the same time, 
+// create a dictionary that stores all the users as a map 
+// Add each user to the item
 let getItems = () => {
     return new Promise((resolve, reject) => {
         Promise.all([userDataService.getUsers(), itemDataService.getItems()])

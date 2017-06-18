@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import {findDOMNode} from 'react-dom';
+import { findDOMNode } from 'react-dom';
+import NoteButtons from './NoteButtons.jsx';
+import { browserHistory } from 'react-router';
+
 export default class Note extends Component {
 
     constructor(props) {
@@ -9,6 +12,7 @@ export default class Note extends Component {
         };
 
         this.randomBetween = this.randomBetween.bind(this);
+        this.info = this.info.bind(this);
         this.edit = this.edit.bind(this);
         this.save = this.save.bind(this);
         this.remove = this.remove.bind(this);
@@ -16,7 +20,9 @@ export default class Note extends Component {
         this.renderForm = this.renderForm.bind(this);
 
     }
-
+    // static contextTypes = {
+    //     router: React.PropTypes.object.isRequired
+    // }
     componentWillMount() {
         this.style = {
             right: this.randomBetween(0, window.innerWidth - 150) + 'px',
@@ -32,6 +38,9 @@ export default class Note extends Component {
         return (min + Math.ceil(Math.random() * max)); // rundom number
     }
 
+    info() {
+        browserHistory.push(`/note/${this.props.id}`);
+    }
     edit() {
         this.setState({ editing: true });
     }
@@ -54,12 +63,14 @@ export default class Note extends Component {
             <div className="note" style={this.style}>
                 <p>{this.props.text}</p>
                 <span className="author"> ~ {this.props.user.username}</span>
-                <span className="buttons">
-                    <button onClick={this.edit}
-                        className="btn btn-primary glyphicon glyphicon-pencil" />
-                    <button onClick={this.remove}
-                        className="btn btn-danger glyphicon glyphicon-trash" />
-                </span>
+
+                <NoteButtons
+                    info={this.info}
+                    edit={this.edit}
+                    remove={this.remove}
+                    userId={this.props.user.id}
+                />
+
             </div>
         );
     }

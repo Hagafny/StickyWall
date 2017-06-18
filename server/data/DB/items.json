@@ -1,1 +1,12 @@
-[{"id":"90d67a10539f11e7b18029f3e866e7de","text":"ghkjfjj","userId":"12345"},{"id":"3c13c1d053a011e7832711322bbad99a","text":"ghkrghjkhghjg","userId":"12345"},{"id":"a243089053a911e7be8fef1e8272f925","text":"hfdvb","userId":"901a236053a911e7bbefe96935095ed1"},{"id":"8c232a3053aa11e78b97356c1a76c282","text":"Hi my name is amir4\nf","userId":"54c4352053aa11e7bce89b6cab0e32e3"}]
+[
+    {
+        "id": "b5b83be0540111e79bbdfd08065c123f",
+        "text": "Welcome to the Sticky Wall. \nMade for Web Apps IDC Course.",
+        "userId": "a253c970540111e7ba507530f7d64c97"
+    },
+    {
+        "id": "ff2e62e0540111e79dcc9b33e4c351db",
+        "userId": "e077fd70540111e797ee75dcde2764b3",
+        "text": "You can drag the notes around, edit them, delete them and go to a \"More Info\" page for each note"
+    }
+]
